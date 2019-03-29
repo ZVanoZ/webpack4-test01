@@ -26,12 +26,21 @@ module.exports = function (env, argv) {
 			path: __dirname + "/public",
 			filename: '[name].js'
 			//library: "[name]"
+		},
+		plugins: [
+			new webpack.ProgressPlugin()
+		],
+		"devServer": {
+			"contentBase": './public'
 		}
 	};
 	/**
 	 * Если не собраны "bundle/Module1.js" и "bundle/Module2.js", то сборка упадет.
 	 * Нужно при 1м запуске  выставить "isBuildModuleAll : false".
 	 * Далее "isBuildModuleAll : true", и при каждом изменении исходников в папке "frontend" запускать webpack два раза.
+	 * @TODO: 'extract-text-webpack-plugin' - возможно, пригодится для восстановления исходных файлов.
+	 * @TODO: 'concat-with-sourcemaps'
+	 * @TODO: 'merge-files-webpack-plugin'
 	 */
 	config = merge(config,
 		/**
@@ -39,16 +48,16 @@ module.exports = function (env, argv) {
 		 * JS-ники собираются, а вот sourceMap не работает.
 		 */
 		require('./get-config.webpack-concat-plugin.js')({
-			isUsed : true,
-			isBuildModuleAll : true
+			isUsed: true,
+			isBuildModuleAll: true
 		}),
 		/**
 		 * Это тестовый конфиг для  'webpack-merge-and-include-globally'.
 		 * Ведутся эксперименты.
 		 */
 		require('./get-config.webpack-merge-and-include-globally.js')({
-			isUsed : false,
-			isBuildModuleAll : false
+			isUsed: true,
+			isBuildModuleAll: false
 		})
 	);
 	// console.log(config);

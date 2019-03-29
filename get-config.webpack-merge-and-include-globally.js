@@ -9,19 +9,24 @@ module.exports = function (options) {
 	}
 	let config = {
 		plugins: [
+/*
 			new MergeIntoSingle({
 				files: [{
 					src: [
 						'./frontend/Module1/script1.js',
 						'./frontend/Module1/script2.js',
+						// 'frontend/Module1/script1.js',
+						// 'frontend/Module1/script2.js',
 					],
 					dest: (code) => {
+						console.log('code', code);
 						const min = uglifyJS.minify(code, {
 							sourceMap: {
-								filename: 'Module1.js',
-								url: 'Module1.js.map'
+								filename: './bundle/Module1.js',
+								url: './bundle/Module1.js.map'
 							}
 						});
+						console.log('code-after', min);
 						return {
 							'Module1.js': min.code,
 							'Module1.js.map': min.map
@@ -31,6 +36,7 @@ module.exports = function (options) {
 					// ,
 					// dest: 'vendor.js'
 				}
+
 					// , {
 					// 	src: ['./frontend/Module1/Module1.css'],
 					// 	dest: 'Module1.css'
@@ -42,10 +48,55 @@ module.exports = function (options) {
 					// 	// })
 					// }
 				]
+			}, (filesMap) => {
+				console.log('CALLBACK', filesMap);
 			})
+			*/
 
+			new MergeIntoSingle({
+				files: {
+					'/bundle/script1.js': [
+						'./frontend/Module1/script1.js',
+						'./frontend/Module1/script2.js',
+					],
+					'/bundle/script2.js': [
+						'./frontend/Module2/script1.js',
+						'./frontend/Module2/script2.js',
+					]
+					// ,
+					// 'style.css': [
+					// 	'*.css',
+					// ]
+				},
+				transform: {
+					'/bundle/script1.js': (val) => {
+						let result = val;
+						console.log('transform: ', val);
+
+						// let result = `${val.toLowerCase()}`;
+						// console.log('transform/result: ', result);
+						result = uglifyJS.minify({
+							// 'fileAAA.js' : val
+							'fileAAA.js' : "var a = function() {};"
+						},{
+							sourceMap: {
+								filename: "out.js",
+								url: "out.js.map"
+							}
+						});
+						console.log('transform/result: ', result);
+						result = result.code;
+
+						return result;
+					},
+				},
+			}, (filesMap) => {
+				console.log('CALLBACK', filesMap);
+			})
 		]
 	};
+
+
 	if (options.isBuildModuleAll) {
 		config = merge(config, {
 			plugins: [
