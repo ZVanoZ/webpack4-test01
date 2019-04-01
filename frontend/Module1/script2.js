@@ -1,5 +1,5 @@
 Module1.__proto__ = {
-	sayHello(){
+	sayHello: function () {
 		console.log('Module1/sayHello');
 	}
-}
+};

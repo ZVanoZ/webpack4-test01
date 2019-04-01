@@ -9,7 +9,8 @@ const ConcatPlugin = require('webpack-concat-plugin');
 
 module.exports = function (env, argv) {
 	let config = {
-		mode: argv.mode || 'production',
+		mode: argv.mode || 'development',
+		devtool: 'source-map',
 		//context: __dirname,
 		//context: path.resolve(__dirname, 'frontend'),
 		context: path.resolve(__dirname),
@@ -24,6 +25,8 @@ module.exports = function (env, argv) {
 		output: {
 			//path: path.resolve(__dirname, '/public'),
 			path: __dirname + "/public",
+			sourceMapFilename: '[name].map',
+			chunkFilename: '[id].chunk.js',
 			filename: '[name].js'
 			//library: "[name]"
 		},
@@ -48,7 +51,7 @@ module.exports = function (env, argv) {
 		 * JS-ники собираются, а вот sourceMap не работает.
 		 */
 		require('./get-config.webpack-concat-plugin.js')({
-			isUsed: true,
+			isUsed: false,
 			isBuildModuleAll: true
 		}),
 		/**
@@ -57,7 +60,7 @@ module.exports = function (env, argv) {
 		 */
 		require('./get-config.webpack-merge-and-include-globally.js')({
 			isUsed: true,
-			isBuildModuleAll: false
+			isBuildModuleAll: true
 		})
 	);
 	// console.log(config);
