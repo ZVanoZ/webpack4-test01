@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const ConcatPlugin = require('webpack-concat-plugin');
 
 module.exports = function (options) {
+	console.log('=====get-config.webpack-concat-plugin.js=====');
 	if (!options.isUsed) {
 		return {}
 	}
@@ -9,7 +10,7 @@ module.exports = function (options) {
 		plugins: [
 			new ConcatPlugin({
 				sourceMap: true,
-				uglify: true,
+				uglify: false,
 				name: 'Module1',
 				fileName: '[name].js',
 				outputPath: '/bundle/',

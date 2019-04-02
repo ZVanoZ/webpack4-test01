@@ -2,9 +2,9 @@ const merge = require('webpack-merge');
 const uglifyJS = require('uglify-js');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const MergeIntoSingle = require('webpack-merge-and-include-globally');
-console.log('==================get-config.webpack-merge-and-include-globally.js===============');
 
 module.exports = function (options) {
+	console.log('=====get-config.webpack-merge-and-include-globally.js=====');
 	let config = {};
 	if (!options.isUsed) {
 		return config;

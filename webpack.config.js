@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ConcatPlugin = require('webpack-concat-plugin');
+const MyPlugin = require('./webpack-concat-after-webpack-concat-plugin/index.js');
 
 // console.log('path_resolve', path.resolve(__dirname, '/frontend'));
 // console.log('path_concat_', __dirname + '/frontend');
@@ -31,7 +32,22 @@ module.exports = function (env, argv) {
 			//library: "[name]"
 		},
 		plugins: [
-			new webpack.ProgressPlugin()
+			new webpack.ProgressPlugin(),
+			new MyPlugin({
+				isTracelog : true,
+				//output : '/bundle/module-all.js',
+				input :[
+					'/bundle/Module1.js',
+					'/bundle/Module2.js'
+				],
+				optionsNewConcatPlugin : {
+					sourceMap: true,
+					uglify: true,
+					name: 'module-all',
+					fileName: '[name].js',
+					outputPath: '/bundle/'
+				}
+			})
 		],
 		"devServer": {
 			"contentBase": './public'
@@ -51,15 +67,15 @@ module.exports = function (env, argv) {
 		 * JS-ники собираются, а вот sourceMap не работает.
 		 */
 		require('./get-config.webpack-concat-plugin.js')({
-			isUsed: false,
-			isBuildModuleAll: true
+			isUsed: true,
+			isBuildModuleAll: false
 		}),
 		/**
 		 * Это тестовый конфиг для  'webpack-merge-and-include-globally'.
 		 * Ведутся эксперименты.
 		 */
 		require('./get-config.webpack-merge-and-include-globally.js')({
-			isUsed: true,
+			isUsed: false,
 			isBuildModuleAll: true
 		})
 	);
