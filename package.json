@@ -1,7 +1,7 @@
 {
-  "name": "park.ext6",
+  "name": "webpack4-test01",
   "version": "0.0.1",
-  "description": "Проект 'Парковка' на ExtJs 6.x",
+  "description": "Тестируем разные варианты объединения скриптов ES3 в пакеты, с последующим объединением пакетов в более крупные пакеты.",
   "directories": {
     "test": "tests"
   },

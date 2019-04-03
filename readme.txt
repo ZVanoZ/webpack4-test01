@@ -9,3 +9,11 @@ $ npm install --save-dev webpack-dev-server
 # Запускаем DEV-сервер.
 $ npm start
 #------------------------------------------------------------------------------
+# Шпаргалка по комадам Webpack
+#--
+
+# Вывод информации о времени, затраченном на каждый модуль сборки
+$ webpack --profile --display-modules
+
+# Дополнительно выводится информация о субзависимостях модулей
+$ webpack --profile --display-modules --display-reasons
